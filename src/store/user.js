@@ -17,18 +17,56 @@ export default {
     }
   },
   actions: {
-    registerUser ({ commit }, { email, password }) {
+    async registerUser ({ commit }, { email, password }) {
       commit('clearError')
       commit('setLoading', true)
-      setTimeout(() => {
-        commit('setUser', new User(Math.random(), email, password))
-        commit('setLoading', false)
-      }, 1000)
+      let isRequestOk = true
+      let promise = new Promise(function (resolve) {
+        setTimeout(() => resolve('Done'), 3000)
+      })
+      if (isRequestOk) {
+        await promise.then(() => {
+          commit('setUser', new User(Math.random(), email, password))
+          commit('setLoading', false)
+        })
+      } else {
+        await promise.then(() => {
+          commit('setLoading', false)
+          commit('setError', 'Ошибка регистрации')
+          throw 'Упс... Ошибка регистрации'
+        })
+      }
+    },
+    async loginUser ({ commit }, { email, password }) {
+      commit('clearError')
+      commit('setLoading', true)
+      let isRequestOk = true
+      let promise = new Promise(function (resolve) {
+        setTimeout(() => resolve('Done'), 3000)
+      })
+      if (isRequestOk) {
+        await promise.then(() => {
+          commit('setUser', new User(Math.random(), email, password))
+          commit('setLoading', false)
+        })
+      } else {
+        await promise.then(() => {
+          commit('setLoading', false)
+          commit('setError', 'Ошибка логина или пароля')
+          throw 'Упс... Ошибка логина или пароля'
+        })
+      }
+    },
+    logoutUser ({ commit }) {
+      commit('setUser', null)
     }
   },
   getters: {
     user (state) {
       return state.user
+    },
+    isUserLoggedIn (state) {
+      return state.user !== null
     }
   }
 }
