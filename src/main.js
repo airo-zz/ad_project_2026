@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import BuyAdModal from './views/Shared/BuyAdModal.vue'
 
 // Vuetify
 import 'vuetify/styles'
@@ -16,4 +17,9 @@ const vuetify = createVuetify({
   directives,
 })
 
-createApp(App).use(router).use(store).use(vuetify).mount('#app')
+createApp(App)
+  .use(router)
+  .use(store)
+  .use(vuetify)
+  .component('buy-ad-modal', BuyAdModal)
+  .mount('#app')
